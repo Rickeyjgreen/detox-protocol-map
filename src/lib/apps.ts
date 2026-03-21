@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { ClipboardList, Map } from 'lucide-react';
+import { BarChart3, ClipboardList, Map } from 'lucide-react';
 
 export type AppLink = {
   slug: string;
@@ -23,7 +23,7 @@ export const apps: AppLink[] = [
     description: 'Abstinence-based protocol lanes + triage notes.',
     href: '/apps/protocol-map',
     icon: Map,
-    legacy: ['/', '/protocol-map'],
+    legacy: ['/protocol-map'],
   },
   {
     slug: 'intake-logic',
@@ -32,5 +32,13 @@ export const apps: AppLink[] = [
     href: '/apps/intake-logic',
     icon: ClipboardList,
     legacy: ['/intake-logic'],
+  },
+  {
+    slug: 'ars-lou',
+    title: 'ARS Louisville Dashboard',
+    description: 'Interactive business health investigation report.',
+    href: '/apps/ars-lou',
+    icon: BarChart3,
+    legacy: ['/ars-lou', '/ARS-LOU'],
   },
 ];

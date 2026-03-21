@@ -2,22 +2,8 @@
 
 import Link from 'next/link';
 import React from 'react';
-import { ChevronRight, ClipboardList, Map, ShieldCheck } from 'lucide-react';
-
-const items = [
-  {
-    title: 'Detoxification Protocol Map',
-    description: 'Clinical lanes + documentation phrases (protocol overview).',
-    href: '/',
-    icon: Map,
-  },
-  {
-    title: 'Intake Logic',
-    description: 'Decision-tree triage logic (step-by-step intake pathway).',
-    href: '/intake-logic',
-    icon: ClipboardList,
-  },
-];
+import { ChevronRight, ShieldCheck } from 'lucide-react';
+import { apps } from '@/lib/apps';
 
 export default function Page() {
   return (
@@ -36,7 +22,7 @@ export default function Page() {
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {items.map((item) => {
+          {apps.map((item) => {
             const Icon = item.icon;
             return (
               <Link
@@ -63,14 +49,11 @@ export default function Page() {
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
           <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Shareable Links</h2>
           <div className="mt-3 space-y-2 text-sm">
-            <div>
-              <span className="font-mono">/intake-logic</span>
-              <span className="text-slate-500"> — Intake logic decision tree</span>
-            </div>
-            <div>
-              <span className="font-mono">/</span>
-              <span className="text-slate-500"> — Detoxification protocol map</span>
-            </div>
+            {apps.flatMap((a) => [a.href, ...(a.legacy ?? [])]).map((href) => (
+              <div key={href}>
+                <span className="font-mono">{href}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
