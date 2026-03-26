@@ -7,6 +7,7 @@ import {
   BookOpenCheck,
   Building2,
   ClipboardList,
+  DollarSign,
   FileQuestion,
   FileSearch2,
   FileText,
