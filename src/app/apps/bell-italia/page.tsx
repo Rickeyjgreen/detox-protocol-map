@@ -16,6 +16,7 @@ import {
   Train,
   Map as MapIcon,
   AlertTriangle,
+  Navigation,
 } from 'lucide-react';
 
 type EventItem = {
@@ -27,6 +28,13 @@ type TipItem = {
   icon: LucideIcon;
   title: string;
   desc: string;
+  mapsUrl?: string;
+};
+
+type HotelItem = {
+  name: string;
+  address: string;
+  mapsUrl: string;
 };
 
 type TripDay = {
@@ -34,13 +42,13 @@ type TripDay = {
   date: string;
   title: string;
   location: string;
-  hotel: {
-    name: string;
-    address: string;
-  };
+  hotel: HotelItem;
   events: EventItem[];
   tips: TipItem[];
 };
+
+const directionsUrl = (destination: string, travelmode = 'walking') =>
+  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}&travelmode=${travelmode}`;
 
 const tripData: TripDay[] = [
   {
@@ -51,6 +59,7 @@ const tripData: TripDay[] = [
     hotel: {
       name: 'Hotel Garden (Day 1 of 2)',
       address: 'Via G. Tempesta 124, Noale - Venezia, IT 30033',
+      mapsUrl: directionsUrl('Hotel Garden, Via G. Tempesta 124, Noale, Italy'),
     },
     events: [{ time: '', desc: 'Travel to Venice Region' }],
     tips: [
@@ -58,6 +67,7 @@ const tripData: TripDay[] = [
         icon: Coffee,
         title: 'Relax in Noale',
         desc: 'Noale is a charming, quieter town on the mainland with a medieval fortress. It is the perfect place to grab a quiet espresso, stretch your legs, and fight off jet lag.',
+        mapsUrl: directionsUrl('Piazza Castello, Noale, Italy'),
       },
     ],
   },
@@ -69,12 +79,13 @@ const tripData: TripDay[] = [
     hotel: {
       name: 'Hotel Garden (Day 2 of 2)',
       address: 'Via G. Tempesta 124, Noale - Venezia, IT 30033',
+      mapsUrl: directionsUrl('Hotel Garden, Via G. Tempesta 124, Noale, Italy'),
     },
     events: [
       { time: '8:45 AM', desc: 'Take a ferry to Venice' },
       { time: '1:00 PM', desc: 'Travel by water taxi to the island of Burano' },
       { time: '2:30 PM', desc: 'Enjoy a classic gondola ride' },
-      { time: '3:15 PM', desc: 'Guided tour of Venice: St. Mark’s Square & Grand Canal' },
+      { time: '3:15 PM', desc: "Guided tour of Venice: St. Mark's Square & Grand Canal" },
       { time: 'Afternoon', desc: 'See a glass-blowing demonstration' },
     ],
     tips: [
@@ -82,11 +93,13 @@ const tripData: TripDay[] = [
         icon: Camera,
         title: 'Burano Photos',
         desc: 'Burano is famous for its hyper-colorful fisherman houses. Keep your camera ready!',
+        mapsUrl: directionsUrl('Burano, Venice, Italy'),
       },
       {
         icon: Utensils,
         title: 'Eat like a Venetian',
         desc: 'Skip the tourist traps and find a bacaro wine bar to try cicchetti, Venetian tapas like crostini with whipped salt cod.',
+        mapsUrl: directionsUrl('Piazza San Marco, Venice, Italy'),
       },
     ],
   },
@@ -98,6 +111,7 @@ const tripData: TripDay[] = [
     hotel: {
       name: 'Hotel Tamerici & Principe (Day 1 of 2)',
       address: 'Viale IV Novembre, 2B, Montecatini Terme, 51016',
+      mapsUrl: directionsUrl('Hotel Tamerici & Principe, Viale IV Novembre 2B, Montecatini Terme, Italy'),
     },
     events: [
       { time: 'Morning', desc: 'Travel to Florence region' },
@@ -109,8 +123,9 @@ const tripData: TripDay[] = [
     tips: [
       {
         icon: Train,
-        title: 'Montecatini Alto',
+        title: 'Montecatini Alto Funicular',
         desc: 'You are staying in a famous thermal spa town. Take the historic red funicular railway up to the medieval village at the top of the hill for an incredible view and dinner.',
+        mapsUrl: directionsUrl('Funicolare di Montecatini Terme, Stazione di Valle'),
       },
     ],
   },
@@ -122,6 +137,7 @@ const tripData: TripDay[] = [
     hotel: {
       name: 'Hotel Tamerici & Principe (Day 2 of 2)',
       address: 'Viale IV Novembre, 2B, Montecatini Terme, 51016',
+      mapsUrl: directionsUrl('Hotel Tamerici & Principe, Viale IV Novembre 2B, Montecatini Terme, Italy'),
     },
     events: [
       {
@@ -132,13 +148,15 @@ const tripData: TripDay[] = [
     tips: [
       {
         icon: MapIcon,
-        title: 'Lucky Boar',
+        title: 'Lucky Boar (Porcellino)',
         desc: 'Head to the Mercato Nuovo and rub the snout of Il Porcellino, the bronze boar statue, for good luck and to guarantee a return to Florence.',
+        mapsUrl: directionsUrl('Fontana del Porcellino, Florence, Italy'),
       },
       {
         icon: Utensils,
-        title: 'Authentic Gelato',
-        desc: 'Look for shops where the gelato is kept in covered metal tubs, called pozzetti, rather than piled high in bright neon colors.',
+        title: 'Authentic Gelato Stop',
+        desc: 'Look for shops where the gelato is kept in covered metal tubs. Try walking toward Piazza del Duomo to find top-rated local gelaterias.',
+        mapsUrl: directionsUrl('Piazza del Duomo, Florence, Italy'),
       },
     ],
   },
@@ -150,6 +168,7 @@ const tripData: TripDay[] = [
     hotel: {
       name: 'Roma Torvergata (Day 1 of 3)',
       address: 'Via Vico Vigano, 24, Roma, IT 00133',
+      mapsUrl: directionsUrl('Hotel Roma Tor Vergata, Via Vico Vigano 24, Rome, Italy'),
     },
     events: [
       { time: 'Morning', desc: 'Travel via Assisi to Rome' },
@@ -163,6 +182,7 @@ const tripData: TripDay[] = [
         icon: Camera,
         title: 'Breathtaking Views',
         desc: 'The Basilica houses stunning 13th-century frescoes by Giotto. Outside, take a moment to look out over the sweeping, peaceful views of the Umbrian valley.',
+        mapsUrl: directionsUrl("Basilica di San Francesco d'Assisi, Assisi, Italy"),
       },
     ],
   },
@@ -174,6 +194,7 @@ const tripData: TripDay[] = [
     hotel: {
       name: 'Roma Torvergata (Day 2 of 3)',
       address: 'Via Vico Vigano, 24, Roma, IT 00133',
+      mapsUrl: directionsUrl('Hotel Roma Tor Vergata, Via Vico Vigano 24, Rome, Italy'),
     },
     events: [
       { time: '1:30 PM', desc: 'Guided tour of Rome: Roman Forum & Colosseum' },
@@ -182,8 +203,10 @@ const tripData: TripDay[] = [
     tips: [
       {
         icon: MapIcon,
-        title: 'Perfect Walking Route',
-        desc: 'Link together the free sights: Walk from the Spanish Steps, to the Trevi Fountain, to the Pantheon, and end in Piazza Navona.',
+        title: 'Custom Walking Route',
+        desc: 'Link together the free sights: Spanish Steps, Trevi Fountain, Pantheon, and Piazza Navona.',
+        mapsUrl:
+          'https://www.google.com/maps/dir/?api=1&destination=Piazza+Navona,+Rome,+Italy&waypoints=Piazza+di+Spagna,+Rome%7CTrevi+Fountain,+Rome%7CPantheon,+Rome&travelmode=walking',
       },
     ],
   },
@@ -195,6 +218,7 @@ const tripData: TripDay[] = [
     hotel: {
       name: 'Roma Torvergata (Day 3 of 3)',
       address: 'Via Vico Vigano, 24, Roma, IT 00133',
+      mapsUrl: directionsUrl('Hotel Roma Tor Vergata, Via Vico Vigano 24, Rome, Italy'),
     },
     events: [
       {
@@ -203,7 +227,7 @@ const tripData: TripDay[] = [
       },
       {
         time: '3:00 PM',
-        desc: 'Guided tour of Vatican City: Sistine Chapel & Vatican Museums. Free time to explore St. Peter\'s Basilica.',
+        desc: "Guided tour of Vatican City: Sistine Chapel & Vatican Museums. Free time to explore St. Peter's Basilica.",
       },
     ],
     tips: [
@@ -211,15 +235,33 @@ const tripData: TripDay[] = [
         icon: AlertTriangle,
         title: 'Strict Dress Code',
         desc: 'Shoulders and knees MUST be covered for everyone. No tank tops or short shorts, or you may be denied entry to the Vatican.',
+        mapsUrl: directionsUrl('Vatican Museums, Vatican City'),
       },
       {
         icon: Info,
         title: 'Barberini Gardens',
         desc: 'These pristine gardens at Castel Gandolfo offer a quiet, serene contrast to the heavy crowds you will experience at the Vatican.',
+        mapsUrl: directionsUrl('Palazzo Apostolico, Castel Gandolfo, Italy'),
       },
     ],
   },
 ];
+
+function DirectionsButton({ href, label, warning = false }: { href: string; label: string; warning?: boolean }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`mt-1 flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold text-white shadow-sm transition-all active:scale-[0.98] ${
+        warning ? 'bg-amber-600 active:bg-amber-700' : 'bg-sky-600 active:bg-sky-700'
+      }`}
+    >
+      <Navigation size={14} />
+      <span>{label}</span>
+    </a>
+  );
+}
 
 function DayCard({ day, isExpanded, onToggle }: { day: TripDay; isExpanded: boolean; onToggle: () => void }) {
   return (
@@ -275,15 +317,18 @@ function DayCard({ day, isExpanded, onToggle }: { day: TripDay; isExpanded: bool
                 return (
                   <div
                     key={`${day.id}-tip-${index}`}
-                    className={`flex gap-3 rounded-xl border p-4 ${isWarning ? 'border-amber-200 bg-amber-50' : 'border-sky-100 bg-sky-50'}`}
+                    className={`flex flex-col gap-3 rounded-xl border p-4 ${isWarning ? 'border-amber-200 bg-amber-50' : 'border-sky-100 bg-sky-50'}`}
                   >
-                    <div className={`mt-0.5 ${isWarning ? 'text-amber-600' : 'text-sky-600'}`}>
-                      <TipIcon size={20} />
+                    <div className="flex gap-3">
+                      <div className={`mt-0.5 flex-shrink-0 ${isWarning ? 'text-amber-600' : 'text-sky-600'}`}>
+                        <TipIcon size={20} />
+                      </div>
+                      <div>
+                        <h4 className={`mb-1 text-sm font-bold ${isWarning ? 'text-amber-900' : 'text-sky-900'}`}>{tip.title}</h4>
+                        <p className={`text-sm leading-relaxed ${isWarning ? 'text-amber-800' : 'text-sky-800'}`}>{tip.desc}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className={`mb-1 text-sm font-bold ${isWarning ? 'text-amber-900' : 'text-sky-900'}`}>{tip.title}</h4>
-                      <p className={`text-sm leading-relaxed ${isWarning ? 'text-amber-800' : 'text-sky-800'}`}>{tip.desc}</p>
-                    </div>
+                    {tip.mapsUrl && <DirectionsButton href={tip.mapsUrl} label="Open Walking Directions" warning={isWarning} />}
                   </div>
                 );
               })}
@@ -292,14 +337,25 @@ function DayCard({ day, isExpanded, onToggle }: { day: TripDay; isExpanded: bool
 
           <div>
             <h3 className="mb-3 ml-1 text-xs font-bold uppercase tracking-wider text-stone-400">Accommodation</h3>
-            <div className="flex items-center gap-3 rounded-xl border border-stone-200 bg-white p-4 shadow-sm">
-              <div className="rounded-full bg-stone-100 p-2.5 text-stone-600">
-                <Bed size={20} />
+            <div className="rounded-xl border border-stone-200 bg-white p-4 shadow-sm">
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0 rounded-full bg-stone-100 p-2.5 text-stone-600">
+                  <Bed size={20} />
+                </div>
+                <div className="min-w-0">
+                  <h4 className="truncate text-sm font-bold text-stone-800">{day.hotel.name}</h4>
+                  <p className="mt-0.5 break-words text-xs leading-relaxed text-stone-500">{day.hotel.address}</p>
+                </div>
               </div>
-              <div>
-                <h4 className="text-sm font-bold text-stone-800">{day.hotel.name}</h4>
-                <p className="mt-0.5 text-xs leading-relaxed text-stone-500">{day.hotel.address}</p>
-              </div>
+              <a
+                href={day.hotel.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 py-2.5 text-xs font-bold text-white shadow-sm active:scale-[0.98] active:bg-emerald-800"
+              >
+                <Navigation size={14} />
+                <span>Open Hotel in Google Maps</span>
+              </a>
             </div>
           </div>
         </div>
@@ -316,8 +372,8 @@ export default function BellItaliaPage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-100 font-sans text-stone-900 selection:bg-emerald-200">
-      <div className="relative mx-auto flex min-h-screen max-w-md flex-col overflow-hidden bg-stone-100 shadow-2xl">
+    <div className="min-h-screen bg-stone-100 font-sans text-stone-900 antialiased selection:bg-emerald-200">
+      <div className="relative mx-auto flex min-h-screen max-w-md flex-col bg-stone-100 shadow-2xl">
         <header className="sticky top-0 z-10 overflow-hidden rounded-b-3xl bg-emerald-800 px-5 pb-6 pt-12 text-white shadow-lg">
           <div className="absolute right-0 top-0 -mr-10 -mt-10 opacity-10">
             <MapIcon size={150} />
@@ -331,13 +387,13 @@ export default function BellItaliaPage() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto px-4 pb-12 pt-6">
+        <main className="flex-1 overflow-x-hidden px-4 pb-12 pt-6">
           <div className="mb-6 flex items-end justify-between px-2">
             <h2 className="text-lg font-bold text-stone-700">Daily Itinerary</h2>
             <button
               type="button"
               onClick={() => setExpandedId(null)}
-              className="rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-600 active:bg-emerald-100"
+              className="rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-600 transition-colors active:bg-emerald-100"
             >
               Collapse All
             </button>
@@ -349,8 +405,8 @@ export default function BellItaliaPage() {
             ))}
           </div>
 
-          <div className="mb-6 mt-10 px-8 text-center text-xs text-stone-400">
-            Tap on any day to see the schedule, tips, and hotel details. Buon viaggio!
+          <div className="mb-6 mt-10 px-8 text-center text-xs leading-relaxed text-stone-400">
+            Tap any day for schedule, tips, hotel details, and Google Maps directions.
           </div>
         </main>
       </div>
